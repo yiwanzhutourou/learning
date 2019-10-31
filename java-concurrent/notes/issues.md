@@ -1,0 +1,7 @@
+- 管程（Monitor）是什么？解决的是什么问题？
+- synchronize 原理
+- 并发工具包源码
+  - Lock, Condition
+- CAS 是什么？
+- Java 是如何管理线程的？Java 线程与操作系统的线程的关系是什么？
+- Java 内存模型

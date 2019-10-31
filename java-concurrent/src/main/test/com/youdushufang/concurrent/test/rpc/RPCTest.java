@@ -1,15 +1,15 @@
-package com.youdushufang.concurrent;
+package com.youdushufang.concurrent.test.rpc;
 
 import com.youdushufang.concurrent.mq.MessageQueue;
 import com.youdushufang.concurrent.rpc.RPCClient;
 import com.youdushufang.concurrent.rpc.RPCServer;
 import com.youdushufang.concurrent.utils.Log;
+import org.junit.jupiter.api.Test;
 
-class SomeRPCPlayer {
+class RPCTest {
 
-    private SomeRPCPlayer() { }
-
-    static void play() {
+    @Test
+    void test() {
         // 模拟两个消息队列
         MessageQueue requestQueue = MessageQueue.newMessageQueue("request-queue");
         MessageQueue replyQueue = MessageQueue.newMessageQueue("reply-queue");

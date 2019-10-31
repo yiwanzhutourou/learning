@@ -1,15 +1,15 @@
-package com.youdushufang.concurrent;
+package com.youdushufang.concurrent.test.sync;
 
 import com.youdushufang.concurrent.sync.SyncHttpClient;
 import com.youdushufang.concurrent.utils.Log;
+import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.Executors;
 
-class SomeSyncPlayer {
+class SyncTest {
 
-    private SomeSyncPlayer() { }
-
-    static void play() {
+    @Test
+    void testGet() {
         SyncHttpClient syncHttpClient = new SyncHttpClient(Executors.newSingleThreadExecutor());
         try {
             Log.log(syncHttpClient.get0("Hello, CountDownLatch"));

@@ -1,6 +1,7 @@
 package com.youdushufang.concurrent.rpc;
 
 import com.youdushufang.concurrent.mq.MessageQueue;
+import com.youdushufang.concurrent.utils.JsonMapper;
 import com.youdushufang.concurrent.utils.Log;
 
 import java.util.Random;
@@ -16,6 +17,10 @@ public class RPCServer {
 
     private final MessageQueue replyQueue;
 
+    private final JsonMapper jsonMapper;
+
+    private final Random random = new Random();
+
     private volatile boolean isShutDown = false;
 
     private final ExecutorService executor = Executors.newFixedThreadPool(4);
@@ -23,6 +28,7 @@ public class RPCServer {
     public RPCServer(MessageQueue requestQueue, MessageQueue replyQueue) {
         this.requestQueue = requestQueue;
         this.replyQueue = replyQueue;
+        this.jsonMapper = new JsonMapper();
     }
 
     public void serve() {
@@ -37,12 +43,10 @@ public class RPCServer {
 
     private class Worker implements Runnable {
 
-        private final String method;
+        private final String message;
 
-        private final Random random = new Random();
-
-        Worker(String method) {
-            this.method = method;
+        Worker(String message) {
+            this.message = message;
         }
 
         @Override
@@ -50,16 +54,26 @@ public class RPCServer {
             if (isShutDown) {
                 return;
             }
-            // 随机睡 1 - 5 秒
-            Log.log("server worker start with " + method);
-            int sleepTime = random.nextInt(4) + 1;
-            try {
-                Thread.sleep(sleepTime * 1000L);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            Log.log("server worker start with " + message);
+            Request request = jsonMapper.fromJson(message, Request.class);
+            if (request == null) {
+                return;
             }
-            replyQueue.publish(method);
-            Log.log("server worker end with " + method + ", work time = " + sleepTime);
+            // 处理请求
+            Response response = handleRequest(request);
+            replyQueue.publish(jsonMapper.toJson(response));
         }
+    }
+
+    private Response handleRequest(Request request) {
+        // 随机睡 1 - 5 秒
+        int sleepTime = random.nextInt(4) + 1;
+        try {
+            Thread.sleep(sleepTime * 1000L);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Log.log("server worker end with " + request + ", work time = " + sleepTime);
+        return Response.newResponse(request.getId(), request.getBody());
     }
 }

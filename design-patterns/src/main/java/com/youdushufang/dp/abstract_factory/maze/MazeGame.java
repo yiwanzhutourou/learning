@@ -1,6 +1,6 @@
 package com.youdushufang.dp.abstract_factory.maze;
 
-import com.youdushufang.dp.abstract_factory.maze.constants.Orientation;
+import com.youdushufang.dp.constants.Orientation;
 import com.youdushufang.dp.abstract_factory.maze.factory.MazeFactory;
 import com.youdushufang.dp.abstract_factory.maze.factory.products.Door;
 import com.youdushufang.dp.abstract_factory.maze.factory.products.Maze;

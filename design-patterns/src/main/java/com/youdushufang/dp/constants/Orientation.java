@@ -1,4 +1,4 @@
-package com.youdushufang.dp.abstract_factory.maze.constants;
+package com.youdushufang.dp.constants;
 
 public enum Orientation {
     NORTH,

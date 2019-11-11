@@ -6,5 +6,7 @@
 - Java 并发编程
 - JVM
 - 设计模式
+- 数据库（MySQL）
+- 数据结构与算法
 
 To be continued...

@@ -1,0 +1,8 @@
+FROM mysql:5.7
+
+MAINTAINER cuiyi "cuiyis@163.com"
+
+ENV LANG C.UTF-8
+
+# 拷贝初始化sql
+COPY ./docker/init.sql /docker-entrypoint-initdb.d/init.sql

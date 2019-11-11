@@ -1,0 +1,16 @@
+version: '3'
+services:
+  mysql-crash-course:
+    container_name: mysql-crash-course
+    build:
+      context: ./
+      dockerfile: ./docker/mysql-Dockerfile
+    environment:
+      MYSQL_DATABASE: trade
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_ROOT_HOST: '%'
+    expose:
+      - "3306"
+    volumes:
+      - ~/.mysqlcs/mysql/mysql_data:/var/lib/mysql
+    restart: always

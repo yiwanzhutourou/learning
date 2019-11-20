@@ -83,7 +83,7 @@ SHOW GRANTS FOR CURRENT_USER();
 
 ```mysql
 # SELECT 基本用法，SELECT 后指定要检索的列
-# FROM 后指定要检索表，FROM 子句并不是必须的，例如 SELECT 1;
+# FROM 后指定要检索的表，FROM 子句并不是必须的，例如 SELECT 1;
 SELECT prod_name
 FROM products;
 # 限定列名
@@ -656,9 +656,9 @@ WHERE MATCH(note_text) AGAINST('>rabbit -complaint' IN BOOLEAN MODE);
 
 根据[官方文档](<https://dev.mysql.com/doc/refman/5.7/en/fulltext-search.html>)，目前支持全文本搜索的存储引擎有两个：MyISAM 和 InnoDB。`FULLTEXT` 索引只能建立在数据类型为 `CHAR`、`VARCHAR`、`TEXT` 的列上。InnoDB 存储引擎下的 `FULLTEXT` 索引参见 [InnoDB `FULLTEXT` Indexes](<https://dev.mysql.com/doc/refman/5.7/en/innodb-fulltext-index.html>)。
 
-> 不具有词分隔符（包括日语和汉语）的语言不能恰当地返回全文本搜索结果。
+> 不具有词分隔符（包括日语和中文）的语言不能恰当地返回全文本搜索结果。
 
-根据[官方文档](<https://dev.mysql.com/doc/refman/5.7/en/fulltext-search.html>)，从 MySQL 5.7.6 版本开始，MySQL 内置了一个 ngram 分词器，支持中文、日语和汉语的分词，具体参见 [ngram Full-Text Parser](<https://dev.mysql.com/doc/refman/5.7/en/fulltext-search-ngram.html>)。
+根据[官方文档](<https://dev.mysql.com/doc/refman/5.7/en/fulltext-search.html>)，从 MySQL 5.7.6 版本开始，MySQL 内置了一个 ngram 分词器，支持中文、日语和韩语的分词，具体参见 [ngram Full-Text Parser](<https://dev.mysql.com/doc/refman/5.7/en/fulltext-search-ngram.html>)。
 
 **这里只讨论了全文本搜索的用法，至于 `FULLTEXT` 索引的优化、不同存储引擎的实现逻辑以及更详细的信息等请参见[Full-Text Search Functions](<https://dev.mysql.com/doc/refman/5.7/en/fulltext-search.html>)或其他资料。**
 

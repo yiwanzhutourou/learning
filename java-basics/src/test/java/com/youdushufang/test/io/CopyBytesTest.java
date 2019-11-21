@@ -1,0 +1,18 @@
+package com.youdushufang.test.io;
+
+import com.youdushufang.io.CopyBytes;
+import org.junit.jupiter.api.Test;
+
+import java.io.IOException;
+
+class CopyBytesTest {
+
+    @Test
+    void testCopyFileBytes() {
+        try {
+            CopyBytes.copyFileBytes("io_files/xanadu.txt", "io_files/outagain.txt");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}

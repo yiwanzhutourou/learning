@@ -15,4 +15,13 @@ class CopyBytesTest {
             e.printStackTrace();
         }
     }
+
+    @Test
+    void testCopyFileBytesUsingChannel() {
+        try {
+            CopyBytes.copyFileBytesUsingChannel("io_files/xanadu.txt", "io_files/outagain.txt");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

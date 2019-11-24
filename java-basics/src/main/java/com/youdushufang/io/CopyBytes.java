@@ -1,8 +1,6 @@
 package com.youdushufang.io;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.file.Path;
@@ -22,6 +20,16 @@ public class CopyBytes {
     public static void copyFileBytes(String from, String to) throws IOException {
         try (FileInputStream in = new FileInputStream(from);
              FileOutputStream out = new FileOutputStream(to)) {
+            int c;
+            while ((c = in.read()) != -1) {
+                out.write(c);
+            }
+        }
+    }
+
+    public static void copyFileBytesBuffered(String from, String to) throws IOException {
+        try (BufferedInputStream in = new BufferedInputStream(new FileInputStream(from));
+             BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(to))) {
             int c;
             while ((c = in.read()) != -1) {
                 out.write(c);

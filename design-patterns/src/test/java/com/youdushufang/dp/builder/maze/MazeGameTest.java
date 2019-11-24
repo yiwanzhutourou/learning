@@ -1,21 +1,20 @@
-package com.youdushufang.dp.test.builder;
+package com.youdushufang.dp.builder.maze;
 
-import com.youdushufang.dp.builder.maze.MazeGame;
 import com.youdushufang.dp.builder.maze.models.CountingMazeBuilder;
 import com.youdushufang.dp.builder.maze.models.Maze;
 import com.youdushufang.dp.builder.maze.models.MazeBuilder;
 import com.youdushufang.dp.builder.maze.models.StandardMazeBuilder;
 import org.junit.jupiter.api.Test;
 
-class MazeGameTest {
+public class MazeGameTest {
 
     @Test
-    void testStandardMazeBuilder() {
+    public void testStandardMazeBuilder() {
         testMazeBuilder(new StandardMazeBuilder());
     }
 
     @Test
-    void testCountingMazeBuilder() {
+    public void testCountingMazeBuilder() {
         testMazeBuilder(new CountingMazeBuilder());
     }
 

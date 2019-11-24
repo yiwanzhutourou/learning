@@ -17,6 +17,15 @@ class CopyBytesTest {
     }
 
     @Test
+    void testCopyFileBytesBuffered() {
+        try {
+            CopyBytes.copyFileBytesBuffered("io_files/xanadu.txt", "io_files/outagain.txt");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
     void testCopyFileBytesUsingChannel() {
         try {
             CopyBytes.copyFileBytesUsingChannel("io_files/xanadu.txt", "io_files/outagain.txt");

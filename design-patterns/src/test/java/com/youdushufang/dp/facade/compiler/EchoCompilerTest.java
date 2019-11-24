@@ -1,8 +1,5 @@
-package com.youdushufang.dp.test.facade.compiler;
+package com.youdushufang.dp.facade.compiler;
 
-import com.youdushufang.dp.facade.compiler.ByteCodeStream;
-import com.youdushufang.dp.facade.compiler.Compiler;
-import com.youdushufang.dp.facade.compiler.EchoCompiler;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
@@ -10,10 +7,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
-class EchoCompilerTest {
+public class EchoCompilerTest {
 
     @Test
-    void testEchoCompilerFacade() {
+    public void testEchoCompilerFacade() {
         System.out.println("// compile start...");
         // Compiler Facade
         Compiler compiler = new EchoCompiler();

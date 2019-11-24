@@ -1,12 +1,8 @@
 package com.youdushufang.dp.facade.compiler;
 
-import com.oracle.tools.packager.IOUtils;
-
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,8 +21,7 @@ public class EchoScanner extends Scanner {
         String text = new BufferedReader(new InputStreamReader(input))
                 .lines()
                 .collect(Collectors.joining("\n"));
-        words = Collections.unmodifiableList(
-                Arrays.asList(text.split("\\s+")));
+        words = List.of(text.split("\\s+"));
     }
 
     @Override

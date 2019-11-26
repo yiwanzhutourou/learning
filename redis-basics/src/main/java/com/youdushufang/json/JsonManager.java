@@ -5,17 +5,26 @@ import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.youdushufang.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.Objects;
-
 @Slf4j
 public class JsonManager {
 
-    public static final JsonManager INSTANCE = new JsonManager();
+    private static volatile JsonManager INSTANCE;
 
     private final JsonMapper jsonMapper;
 
     private JsonManager() {
         jsonMapper = new JsonMapper();
+    }
+
+    public static JsonManager getInstance() {
+        if (INSTANCE == null) {
+            synchronized (JsonManager.class) {
+                if (INSTANCE == null) {
+                    INSTANCE = new JsonManager();
+                }
+            }
+        }
+        return INSTANCE;
     }
 
     public <T> String toJson(T object) {

@@ -5,11 +5,26 @@ package com.youdushufang.dp.abstract_factory.maze.factory.products;
  */
 public class EnchantedRoom extends Room {
 
-    private final Spell spell;
+    private Spell spell;
 
     public EnchantedRoom(int id, Spell spell) {
         super(id);
         this.spell = spell;
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        EnchantedRoom result;
+        try {
+            result = (EnchantedRoom) super.clone();
+        } catch (CloneNotSupportedException e) {
+            // this shouldn't happen, since we are Cloneable
+            throw new InternalError(e);
+        }
+        if (spell != null) {
+            result.spell = (Spell) spell.clone();
+        }
+        return result;
     }
 
     @Override

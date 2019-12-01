@@ -323,3 +323,36 @@ From the Java virtual machine's perspective, arrays and enumerated types (or enu
 
 ### Arrays
 
+Arrays are implemented in the Java virtual machine. The only methods on arrays are those inherited from [`Object`](https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html). The length of an array is not part of its type; arrays have a `length` field which is accessible via [`java.lang.reflect.Array.getLength()`](https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Array.html#getLength-java.lang.Object-). Reflection provides methods for accessing array types and array component types, creating new arrays, and retrieving and setting array component values.
+
+Array types may be identified by invoking [`Class.isArray()`](https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html#isArray--). [`Class.getComponentType`](<https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html#getComponentType-->) returns the `Class` representing the component type of an array. If this class does not represent an array class this method returns null.
+
+#### Creating New Arrays
+
+Just as in non-reflective code, reflection supports the ability to dynamically create arrays of arbitrary type and dimensions via [`java.lang.reflect.Array.newInstance()`](https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Array.html#newInstance-java.lang.Class-int-).
+
+#### Getting and Setting Arrays and Their Components
+
+Just as in non-reflective code, an array field may be set or retrieved in its entirety or component by component. To set the entire array at once, use [`java.lang.reflect.Field.set(Object obj, Object value)`](https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Field.html#set-java.lang.Object-java.lang.Object-). To retrieve the entire array, use [`Field.get(Object)`](https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Field.html#get-java.lang.Object-). Individual components can be set or retrieved using methods in [`java.lang.reflect.Array`](https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Array.html).
+
+[`Array`](https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Array.html) provides methods of the form `set*Foo*()` and `get*Foo*()` for setting and getting components of any primitive type. For example, the component of an `int` array may be set with [`Array.setInt(Object array, int index, int value)`](https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Array.html#setInt-java.lang.Objectint-int-) and may be retrieved with [`Array.getInt(Object array, int index)`](https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Array.html#getInt-java.lang.Object-int-).
+
+These methods support automatic *widening* of data types. Therefore, [`Array.getShort()`](https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Array.html#getShort-java.lang.Object-int-) may be used to set the values of an `int` array since a 16-bit `short` may be widened to a 32-bit `int` without loss of data; on the other hand, invoking [`Array.setLong()`](https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Array.html#setLong-java.lang.Object-int-long-) on an array of `int` will cause an [`IllegalArgumentException`](https://docs.oracle.com/javase/8/docs/api/java/lang/IllegalArgumentException.html) to be thrown because a 64-bit `long` can not be narrowed to for storage in a 32-bit `int` with out loss of information. This is true regardless of whether the actual values being passed could be accurately represented in the target data type.
+
+The components of arrays of reference types (including arrays of arrays) are set and retrieved using [`Array.set(Object array, int index, int value)`](https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Array.html#set-java.lang.Object-int-int-) and [`Array.get(Object array, int index)`](https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Array.html#get-java.lang.Object-int-).
+
+> **Tip:** When using reflection to set or get an array component, the compiler does not have an opportunity to perform boxing. It can only convert types that are related as described by the specification for [`Class.isAssignableFrom()`](https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html#isAssignableFrom-java.lang.Class-).
+
+### Enumerated Types
+
+An *enum* is a language construct that is used to define type-safe enumerations which can be used when a fixed set of named values is desired. All enums implicitly extend [`java.lang.Enum`](https://docs.oracle.com/javase/8/docs/api/java/lang/Enum.html). Enums may contain one or more *enum constants*, which define unique instances of the enum type. An enum declaration defines an *enum type* which is very similar to a class in that it may have members such as fields, methods, and constructors (with some restrictions).
+
+Since enums are classes, reflection has no need to define an explicit `java.lang.reflect.Enum` class. The only Reflection APIs that are specific to enums are [`Class.isEnum()`](https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html#isEnum--), [`Class.getEnumConstants()`](https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html#getEnumConstants--), and [`java.lang.reflect.Field.isEnumConstant()`](https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Field.html#isEnumConstant--). Most reflective operations involving enums are the same as any other class or member.
+
+[`Class.isEnum()`](https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html#isEnum--) indicates whether this class represents an enum type.
+
+[`Class.getEnumConstants()`](https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html#getEnumConstants--) retrieves the list of enum constants defined by the enum in the order they're declared.
+
+[`java.lang.reflect.Field.isEnumConstant()`](https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Field.html#isEnumConstant--) indicates whether this field represents an element of an enumerated type.
+
+> **Tip:** It is a compile-time error to attempt to explicitly instantiate an enum because that would prevent the defined enum constants from being unique. This restriction is also enforced in reflective code. Code which attempts to instantiate classes using their default constructors should invoke [`Class.isEnum()`](https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html#isEnum--) first to determine if the class is an enum.

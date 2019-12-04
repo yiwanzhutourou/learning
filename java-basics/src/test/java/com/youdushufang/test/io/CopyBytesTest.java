@@ -33,4 +33,13 @@ class CopyBytesTest {
             e.printStackTrace();
         }
     }
+
+    @Test
+    void testCopyFileBytesUsingDirectBuffer() {
+        try {
+            CopyBytes.copyFileBytesUsingDirectBuffer("io_files/xanadu.txt", "io_files/outagain.txt");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

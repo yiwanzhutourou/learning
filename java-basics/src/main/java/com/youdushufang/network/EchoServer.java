@@ -14,17 +14,11 @@ import java.util.concurrent.Executors;
 @Slf4j
 public class EchoServer {
 
-    private static ExecutorService executorService = Executors.newFixedThreadPool(1);
+    private static ExecutorService executorService = Executors.newFixedThreadPool(16);
 
     @SuppressWarnings("all")
     public static void main(String[] args) {
-        if (args.length != 1) {
-            System.err.println("Usage: java EchoServer <port number>");
-            System.exit(1);
-        }
-
-        int portNumber = Integer.parseInt(args[0]);
-        try (ServerSocket serverSocket = new ServerSocket(portNumber)) {
+        try (ServerSocket serverSocket = new ServerSocket(5566)) {
             while (true) {
                 Socket clientSocket = serverSocket.accept();
                 executorService.submit(new EchoWorker(clientSocket));

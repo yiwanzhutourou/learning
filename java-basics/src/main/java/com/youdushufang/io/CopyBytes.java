@@ -50,4 +50,18 @@ public class CopyBytes {
             }
         }
     }
+
+    public static void copyFileBytesUsingDirectBuffer(String from, String to) throws IOException {
+        Path out = Paths.get(from);
+        Path in = Paths.get(to);
+        ByteBuffer buffer = ByteBuffer.allocateDirect(64);
+        try (FileChannel outChannel = FileChannel.open(out);
+             FileChannel inChannel = FileChannel.open(in, StandardOpenOption.WRITE)) {
+            while (outChannel.read(buffer) > 0) {
+                buffer.flip();
+                inChannel.write(buffer);
+                buffer.clear();
+            }
+        }
+    }
 }

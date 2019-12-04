@@ -1,12 +1,11 @@
-package com.youdushufang.network;
+package com.youdushufang.nio.echo;
 
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.Socket;
+import java.net.InetSocketAddress;
+import java.nio.ByteBuffer;
+import java.nio.channels.SocketChannel;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -22,7 +21,7 @@ public class EchoClient {
                 TimeUnit.MILLISECONDS,
                 new LinkedBlockingQueue<>(),
                 new EchoClientThreadFactory());
-        for (int i = 0; i < 10000; i++) {
+        for (int i = 0; i < 1000; i++) {
             executor.submit(() -> requestServer("Hello, from " + Thread.currentThread().getName()));
         }
         TimeUnit.SECONDS.sleep(10);
@@ -30,15 +29,17 @@ public class EchoClient {
     }
 
     private static void requestServer(String message) {
-        try (Socket socket = new Socket("localhost", 5566);
-             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-             BufferedReader in = new BufferedReader(
-                     new InputStreamReader(socket.getInputStream()))) {
-            out.println(message);
-            log.info("echo: " + in.readLine());
+        ByteBuffer buffer = ByteBuffer.wrap(message.getBytes());
+        String response;
+        try (SocketChannel socketChannel = SocketChannel.open(
+                new InetSocketAddress("localhost", 5555))) {
+            socketChannel.write(buffer);
+            buffer.clear();
+            socketChannel.read(buffer);
+            response = new String(buffer.array()).trim();
+            log.info(response);
         } catch (IOException e) {
-            log.error("error: " + e);
-            System.exit(1);
+            e.printStackTrace();
         }
     }
 

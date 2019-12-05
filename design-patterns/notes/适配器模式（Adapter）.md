@@ -25,7 +25,7 @@
 
 类适配器基于多继承（multiple inheritance），其结构图如下所示：
 
-![类适配器结构图](https://youdu-markdown.oss-cn-shanghai.aliyuncs.com/20191204163858.png)
+![类适配器结构图](https://youdu-markdown.oss-cn-shanghai.aliyuncs.com/20191204163901.png)
 
 Java 不支持多继承，因此 Java 中的适配器多是对象适配器。对象适配器和类适配器的区别可以参考组合与继承的区别。
 

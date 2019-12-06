@@ -5,9 +5,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
-class EquipmentWithChildren extends AbstractEquipment {
+abstract class EquipmentWithChildren extends AbstractEquipment {
 
-    private List<Equipment> children;
+    List<Equipment> children;
 
     EquipmentWithChildren(String name) {
         super(name);
